@@ -1,0 +1,85 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "general"
+        label: "General"
+        file: "content/settings/general.md"
+        fields:
+          - { label: "Site Title", name: "title", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Color Scheme", name: "color_scheme", widget: "select", options: ["light", "dark"] }
+
+  - name: "cars"
+    label: "Car Inventory"
+    folder: "content/cars"
+    create: true
+    slug: "{{year}}-{{make}}-{{model}}"
+    fields:
+      - { label: "Year", name: "year", widget: "number" }
+      - { label: "Make", name: "make", widget: "string" }
+      - { label: "Model", name: "model", widget: "string" }
+      - { label: "Price", name: "price", widget: "string", required: false }
+      - { label: "Mileage", name: "mileage", widget: "string", required: false }
+      - { label: "Description", name: "description", widget: "markdown" }
+      - { label: "Main Image", name: "main_image", widget: "image" }
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        field:
+          { label: "Image", name: "image", widget: "image" }
+      - label: "Specifications"
+        name: "specifications"
+        widget: "object"
+        fields:
+          - { label: "Transmission", name: "transmission", widget: "string", required: false }
+          - { label: "Drivetrain", name: "drivetrain", widget: "string", required: false }
+          - { label: "Engine", name: "engine", widget: "string", required: false }
+          - { label: "VIN", name: "vin", widget: "string", required: false }
+
+  - name: "contacts"
+    label: "Contact Info"
+    folder: "content/contacts"
+    create: false
+    files:
+      - name: "dealerships"
+        label: "Dealerships"
+        file: "content/contacts/dealerships.md"
+        fields:
+          - label: "Locations"
+            name: "locations"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Address", name: "address", widget: "string" }
+              - { label: "Phone", name: "phone", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "Hours", name: "hours", widget: "string" }
+
+  - name: "trade-in"
+    label: "Trade-In Submissions"
+    folder: "content/trade-in"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Phone", name: "phone", widget: "string" }
+      - { label: "Email", name: "email", widget: "string" }
+      - { label: "Vehicle Info", name: "vehicle_info", widget: "object", fields: [
+          { label: "Year", name: "year", widget: "string" },
+          { label: "Make", name: "make", widget: "string" },
+          { label: "Model", name: "model", widget: "string" },
+          { label: "VIN", name: "vin", widget: "string" },
+          { label: "Mileage", name: "mileage", widget: "string" },
+          { label: "Condition", name: "condition", widget: "string" }
+        ] }
+      - { label: "Photos", name: "photos", widget: "list", field: { label: "Photo", name: "photo", widget: "image" } }
+      - { label: "Interested Vehicle", name: "interested_vehicle", widget: "string" }
+
