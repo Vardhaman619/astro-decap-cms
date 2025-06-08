@@ -11,7 +11,7 @@ collections:
     files:
       - name: "general"
         label: "General"
-        file: "content/settings/general.md"
+        file: "src/content/settings/general.md"
         fields:
           - { label: "Site Title", name: "title", widget: "string" }
           - { label: "Tagline", name: "tagline", widget: "string" }
@@ -20,41 +20,51 @@ collections:
 
   - name: "cars"
     label: "Car Inventory"
-    folder: "content/cars"
+    folder: "src/content/cars"
     create: true
-    slug: "{{slug}}"  # This allows user to manually set a slug
+    slug: "{{slug}}"
     fields:
-      - { label: "Custom Slug", name: "slug", widget: "string", hint: "Set the URL slug manually (e.g. honda-civic-2020)" }
-      - { label: "Year", name: "year", widget: "number" }
-      - { label: "Make", name: "make", widget: "string" }
-      - { label: "Model", name: "model", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", hint: "URL slug (e.g. toyota-corolla-2022)",required: true }
+      - { label: "Title", name: "title", widget: "string",required: true }
+      - { label: "Short Description", name: "short_description", widget: "text",required: true }
+      - { label: "Featured Image", name: "featured_image", widget: "image", required: true }
+      - { label: "Content", name: "content", widget: "markdown",required: true }
       - { label: "Price", name: "price", widget: "string", required: false }
-      - { label: "Mileage", name: "mileage", widget: "string", required: false }
-      - { label: "Description", name: "description", widget: "markdown" }
-      - { label: "Featured Image", name: "featured_image", widget: "image" }
+      - { label: "Phone Number", name: "phone_number", widget: "string", required: true }
       - label: "Gallery"
         name: "gallery"
         widget: "list"
         field:
-          { label: "Image", name: "image", widget: "image" }
-      - label: "Specifications"
-        name: "specifications"
+          { label: "Image", name: "image", widget: "image", required: true }
+      - label: "Attributes"
+        name: "attributes"
+        widget: "list"
+        fields:
+          - { label: "Attribute Name", name: "name", widget: "select", options: ["Transmission", "Fuel Type", "Year", "Mileage"] }
+          - { label: "Value", name: "value", widget: "string",required: true }
+          - { label: "Featured", name: "featured", widget: "boolean", default: false, hint: "Check this to feature this attribute on the car card." }
+      - label: "Additional Details"
+        name: "additional_details"
+        widget: "list"
+        fields:
+          - { label: "Title", name: "title", widget: "string", required: true }
+          - { label: "Description", name: "description", widget: "markdown", required: true }
+      - label: "SEO"
+        name: "seo"
         widget: "object"
         fields:
-          - { label: "Transmission", name: "transmission", widget: "string", required: false }
-          - { label: "Drivetrain", name: "drivetrain", widget: "string", required: false }
-          - { label: "Engine", name: "engine", widget: "string", required: false }
-          - { label: "VIN", name: "vin", widget: "string", required: false }
+          - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+          - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
 
 
   - name: "contacts"
     label: "Contact Info"
-    folder: "content/contacts"
+    folder: "src/content/contacts"
     create: false
     files:
       - name: "dealerships"
         label: "Dealerships"
-        file: "content/contacts/dealerships.md"
+        file: "src/content/contacts/dealerships.md"
         fields:
           - label: "Locations"
             name: "locations"
@@ -68,7 +78,7 @@ collections:
 
   - name: "trade-in"
     label: "Trade-In Submissions"
-    folder: "content/trade-in"
+    folder: "src/content/trade-in"
     create: true
     slug: "{{slug}}"
     fields:
