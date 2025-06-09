@@ -2,8 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "public/uploads"
-public_folder: "/uploads"
+media_folder: src/assets/images/
+public_folder: src/assets/images/
 
 collections:
   - name: "settings"
@@ -15,8 +15,12 @@ collections:
         fields:
           - { label: "Site Title", name: "title", widget: "string" }
           - { label: "Tagline", name: "tagline", widget: "string" }
-          - { label: "Color Scheme", name: "color_scheme", widget: "select", options: ["light", "dark"] }
-
+          - {
+              label: "Color Scheme",
+              name: "color_scheme",
+              widget: "select",
+              options: ["light", "dark"],
+            }
 
   - name: "cars"
     label: "Car Inventory"
@@ -24,13 +28,39 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Slug", name: "slug", widget: "string", hint: "URL slug (e.g. toyota-corolla-2022)",required: true }
-      - { label: "Title", name: "title", widget: "string",required: true }
-      - { label: "Short Description", name: "short_description", widget: "text",required: true }
-      - { label: "Featured Image", name: "featured_image", widget: "image", required: true }
-      - { label: "Content", name: "content", widget: "markdown",required: true }
+      - {
+          label: "Slug",
+          name: "slug",
+          widget: "string",
+          hint: "URL slug (e.g. toyota-corolla-2022)",
+          required: true,
+        }
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - {
+          label: "Short Description",
+          name: "short_description",
+          widget: "text",
+          required: true,
+        }
+      - {
+          label: "Featured Image",
+          name: "featured_image",
+          widget: "image",
+          required: true,
+        }
+      - {
+          label: "Content",
+          name: "content",
+          widget: "markdown",
+          required: true,
+        }
       - { label: "Price", name: "price", widget: "string", required: false }
-      - { label: "Phone Number", name: "phone_number", widget: "string", required: true }
+      - {
+          label: "Phone Number",
+          name: "phone_number",
+          widget: "string",
+          required: true,
+        }
       - label: "Gallery"
         name: "gallery"
         widget: "list"
@@ -40,26 +70,50 @@ collections:
         name: "attributes"
         widget: "list"
         fields:
-          - { label: "Attribute Name", name: "name", widget: "select", options: ["Transmission", "Fuel Type", "Year", "Mileage"] }
-          - { label: "Value", name: "value", widget: "string",required: true }
-          - { label: "Featured", name: "featured", widget: "boolean", default: false, hint: "Check this to feature this attribute on the car card." }
+          - {
+              label: "Attribute Name",
+              name: "name",
+              widget: "select",
+              options: ["Transmission", "Fuel Type", "Year", "Mileage"],
+            }
+          - { label: "Value", name: "value", widget: "string", required: true }
+          - {
+              label: "Featured",
+              name: "featured",
+              widget: "boolean",
+              default: false,
+              hint: "Check this to feature this attribute on the car card.",
+            }
       - label: "Additional Details"
         name: "additional_details"
         widget: "list"
         fields:
           - { label: "Title", name: "title", widget: "string", required: true }
-          - { label: "Description", name: "description", widget: "markdown", required: true }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "markdown",
+              required: true,
+            }
       - label: "SEO"
         name: "seo"
         widget: "object"
         fields:
-          - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
-          - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
-
+          - {
+              label: "SEO Title",
+              name: "seo_title",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "SEO Description",
+              name: "seo_description",
+              widget: "text",
+              required: false,
+            }
 
   - name: "contacts"
     label: "Contact Info"
-    folder: "src/content/contacts"
     create: false
     files:
       - name: "dealerships"
@@ -75,24 +129,3 @@ collections:
               - { label: "Phone", name: "phone", widget: "string" }
               - { label: "Email", name: "email", widget: "string" }
               - { label: "Hours", name: "hours", widget: "string" }
-
-  - name: "trade-in"
-    label: "Trade-In Submissions"
-    folder: "src/content/trade-in"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Phone", name: "phone", widget: "string" }
-      - { label: "Email", name: "email", widget: "string" }
-      - { label: "Vehicle Info", name: "vehicle_info", widget: "object", fields: [
-          { label: "Year", name: "year", widget: "string" },
-          { label: "Make", name: "make", widget: "string" },
-          { label: "Model", name: "model", widget: "string" },
-          { label: "VIN", name: "vin", widget: "string" },
-          { label: "Mileage", name: "mileage", widget: "string" },
-          { label: "Condition", name: "condition", widget: "string" }
-        ] }
-      - { label: "Photos", name: "photos", widget: "list", field: { label: "Photo", name: "photo", widget: "image" } }
-      - { label: "Interested Vehicle", name: "interested_vehicle", widget: "string" }
-
