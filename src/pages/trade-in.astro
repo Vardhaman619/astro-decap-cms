@@ -1,0 +1,244 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <form
+    name="trade-in"
+    method="POST"
+    data-netlify="true"
+    enctype="multipart/form-data"
+    class="trade-in-form"
+  >
+    <input type="hidden" name="form-name" value="trade-in" />
+
+    <!-- Name -->
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required />
+
+    <!-- Phone -->
+    <label for="phone">Phone</label>
+    <input type="text" id="phone" name="phone" required />
+
+    <!-- Email -->
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required />
+
+    <!-- Year -->
+    <label for="year">Year</label>
+    <input type="text" id="year" name="year" />
+
+    <!-- Make -->
+    <label for="make">Make</label>
+    <input type="text" id="make" name="make" />
+
+    <!-- Model -->
+    <label for="model">Model</label>
+    <input type="text" id="model" name="model" />
+
+    <!-- VIN -->
+    <label for="vin">VIN</label>
+    <input type="text" id="vin" name="vin" />
+
+    <!-- Mileage -->
+    <label for="mileage">Mileage</label>
+    <input type="text" id="mileage" name="mileage" />
+
+    <!-- Condition -->
+    <label for="condition">Condition</label>
+    <select id="condition" name="condition">
+      <option value="excellent">Excellent</option>
+      <option value="good">Good</option>
+      <option value="fair">Fair</option>
+      <option value="poor">Poor</option>
+    </select>
+
+    <!-- Interested Vehicle -->
+    <label for="interested_vehicle">Interested Vehicle</label>
+    <input type="text" id="interested_vehicle" name="interested_vehicle" />
+
+    <!-- Photos -->
+    <label for="file-upload" class="form-label"> Upload Photos (Max 5) </label>
+    <div
+      id="dropzone"
+      class="dropzone"
+      aria-describedby="dropzone-help"
+      tabindex="0"
+    >
+      <p>Drag & drop images here or <span class="browse-text">browse</span></p>
+      <input
+        type="file"
+        id="file-upload"
+        name="photos"
+        accept="image/*"
+        multiple
+        hidden
+      />
+      <div id="preview" class="preview"></div>
+    </div>
+    <small id="dropzone-help" class="help-text">
+      You can select up to 5 images.
+    </small>
+
+    <button type="submit" class="submit-button">Submit</button>
+  </form>
+</Layout>
+
+<style>
+  .trade-in-form {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+
+  label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+
+  .dropzone {
+    border: 2px dashed #aaa;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      border-color 0.3s;
+    margin-top: 0.5rem;
+  }
+
+  .dropzone:hover,
+  .dropzone.dragover {
+    background-color: #eef6ff;
+    border-color: #5b9bd5;
+  }
+
+  .dropzone p {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+  }
+
+  .browse-text {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .preview {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .preview img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .help-text {
+    display: block;
+    margin-top: 0.5rem;
+    color: #777;
+    font-size: 0.9rem;
+  }
+
+  .submit-button {
+    display: inline-block;
+    background-color: #5b9bd5;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+  }
+
+  .submit-button:hover {
+    background-color: #4a89c7;
+  }
+</style>
+
+<script>
+  const dropzone = document.getElementById("dropzone");
+  const fileInput = document.getElementById("file-upload");
+  const preview = document.getElementById("preview");
+
+  dropzone.addEventListener("click", () => {
+    fileInput.click();
+  });
+
+  dropzone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropzone.classList.add("dragover");
+  });
+
+  dropzone.addEventListener("dragleave", () => {
+    dropzone.classList.remove("dragover");
+  });
+
+  dropzone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropzone.classList.remove("dragover");
+    handleFiles(e.dataTransfer.files);
+  });
+
+  fileInput.addEventListener("change", (e) => {
+    handleFiles(e.target.files);
+  });
+
+  function handleFiles(files) {
+    preview.innerHTML = "";
+
+    if (files.length > 5) {
+      alert("You can select up to 5 images.");
+      fileInput.value = "";
+      return;
+    }
+
+    const dt = new DataTransfer();
+
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith("image/")) {
+        alert(`${file.name} is not an image file.`);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.alt = file.name;
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+
+      dt.items.add(file);
+    });
+
+    fileInput.files = dt.files;
+  }
+</script>
