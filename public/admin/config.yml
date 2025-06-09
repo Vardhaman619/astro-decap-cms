@@ -6,22 +6,6 @@ media_folder: src/assets/images/
 public_folder: src/assets/images/
 
 collections:
-  - name: "settings"
-    label: "Site Settings"
-    files:
-      - name: "general"
-        label: "General"
-        file: "src/content/settings/general.md"
-        fields:
-          - { label: "Site Title", name: "title", widget: "string" }
-          - { label: "Tagline", name: "tagline", widget: "string" }
-          - {
-              label: "Color Scheme",
-              name: "color_scheme",
-              widget: "select",
-              options: ["light", "dark"],
-            }
-
   - name: "cars"
     label: "Car Inventory"
     folder: "src/content/cars"
